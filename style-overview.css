@@ -1,0 +1,218 @@
+/* ================= ROOT ================= */
+:root {
+  /* Versi terang dari palet Noctis */
+  --bg-app: #F1F5F9;       /* Abu-abu kebiruan sangat terang */
+  --bg-card: #FFFFFF;      /* Putih bersih untuk kartu */
+  
+  --text-main: #1B2936;    /* Menggunakan warna gelap Anda sebagai teks */
+  --text-muted: #64748B;
+  
+  --green: #22C55E;
+  --yellow: #FACC15;
+  --red: #EF4444;
+  
+  /* PERBAIKAN: Gunakan warna yang lebih soft untuk Light Mode */
+  --border-color: #CBD5E1; 
+  --shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.08);
+  --card-gradient: linear-gradient(145deg, #ffffff, #f1f5f9); 
+}
+  
+  
+  /* --- CSS Toggle ganti tema */
+  .theme-switch-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+  }
+  
+  .theme-checkbox {
+    --toggle-size: 8px; /* Saya perkecil sedikit agar proporsional sebagai floating button */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 6.25em;
+    height: 3.125em;
+    background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+    background-size: 205%;
+    background-position: 0;
+    transition: 0.4s;
+    border-radius: 99em;
+    position: relative;
+    cursor: pointer;
+    font-size: var(--toggle-size);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Tambahan shadow agar terlihat melayang */
+  }
+  
+  .theme-checkbox::before {
+    content: "";
+    width: 2.25em;
+    height: 2.25em;
+    position: absolute;
+    top: 0.438em;
+    left: 0.438em;
+    background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+    background-size: 205%;
+    background-position: 100%;
+    border-radius: 50%;
+    transition: 0.4s;
+  }
+  
+  .theme-checkbox:checked::before {
+    left: calc(100% - 2.25em - 0.438em);
+    background-position: 0;
+  }
+  
+  .theme-checkbox:checked {
+    background-position: 100%;
+  }
+  
+  [data-theme="dark"] {
+    /* ================= MODE GELAP (Noctis Palette) ================= */
+  /* Diambil dari palet Noctis: Biru yang lebih 'airy' dan tidak sepekat Slate */
+  --bg-app: #1B2936;       /* Latar belakang utama (lebih terang & kebiruan) */
+  --bg-card: #253341;      /* Latar kartu (kontras yang lebih halus dengan bg-app) */
+  
+  /* Teks diturunkan sedikit dari putih bersih ke off-white agar tidak silau */
+  --text-main: #E2E8F0;    /* Putih Noctis (lebih adem) */
+  --text-muted: #8E9FB1;   /* Abu-abu kebiruan untuk teks pendukung */
+  --green: #22C55E;
+  --yellow: #FACC15;
+  --red: #EF4444;
+  
+  --border-color: #334155; /* Warna asli kamu untuk dark mode */
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --card-gradient: linear-gradient(145deg, #1E293B, #111827);
+  }
+
+/* Fail-safe: Jika data-theme dark aktif, pastikan visual toggle mengikuti 
+   bahkan sebelum JavaScript selesai melakukan sinkronisasi pada input */
+[data-theme="dark"] .theme-checkbox {
+    background-position: 100%;
+}
+
+[data-theme="dark"] .theme-checkbox::before {
+    left: calc(100% - 2.25em - 0.438em);
+    background-position: 0;
+}
+  
+
+body {
+  margin: 0;
+  padding: 0; 
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.page {
+  max-width: 1200px; /* Batasi lebar agar tidak terlalu melar di monitor wide */
+  margin: 0 auto;
+  padding: 40px 20px;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+/* ================= GRID MATRIX ================= */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsif otomatis */
+  gap: 20px;
+  width: 100%;
+}
+
+/* ================= DARK CARD STYLE ================= */
+.card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 140px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border: 1px solid var(--border-color);
+  transition: all 0.3s ease; 
+  position: relative;
+  overflow: hidden;
+  box-shadow: var(--shadow-soft); /* GUNAKAN VARIABEL */
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-soft);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.node-badge {
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+}
+
+.status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--text-muted);
+}
+
+/* Typography Inside Card */
+.value {
+  font-size: 32px !important;
+  font-weight: 800;
+  color: var(--text-main);
+  margin: 10px 0;
+}
+
+.unit {
+  font-size: 14px;
+  color: var(--text-muted);
+}
+
+.last-seen {
+  font-size: 10px;
+  color: var(--text-muted);
+  text-align: right;
+}
+
+/* ================= STATUS STATES ================= */
+
+/* ONLINE */
+.card.online {
+  border-left: 5px solid var(--green);
+  /* Jangan gunakan background putih agar teks putih tetap terbaca */
+  background: var(--card-gradient); 
+}
+.card.online .status-dot {
+  background: var(--green);
+  box-shadow: 0 0 10px var(--green);
+}
+
+/* OFFLINE */
+.card.offline {
+  opacity: 0.5;
+  border-left: 5px solid #475569;
+}
+
+/* WARNING & DANGER */
+.card.warning { border-left: 5px solid var(--yellow); }
+.card.danger { border-left: 5px solid var(--red); }
