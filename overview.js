@@ -10,7 +10,8 @@ const PASS = "__MQTT_PASS__";
 const TIMEOUT = 10000; // ms → dianggap offline
 
 // 1. Tentukan daftar gate yang dimiliki, hardcoded
-const INITIAL_NODES = ["GATE1", "GATE2", "GATE3", "GATE4", "GATE5", "GATE6" ];
+const INITIAL_NODES = ["GATE1", "GATE2", "GATE3", "GATE4", "GATE5", "GATE6", "GATE7", "GATE8", 
+                      "GATE9", "GATE10"];
 // const INITIAL_NODES = raw_nodes.map(node => node.toUpperCase());
 const nodes = {}; 
 
