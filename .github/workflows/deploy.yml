@@ -27,3 +27,7 @@ jobs:
         with:
           folder: .
           branch: gh-pages # Branch tujuan untuk hosting
+
+          #2 baris konfigurasi bot ini sebagai fail-safe autentikasi commit personal
+          git-config-name: "github-actions[bot]"
+          git-config-email: "github-actions[bot]@users.noreply.github.com"
