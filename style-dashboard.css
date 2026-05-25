@@ -1,0 +1,293 @@
+/* ================= ROOT ================= */
+:root {
+/* Versi terang dari palet Noctis */
+--bg-app: #F1F5F9;       /* Abu-abu kebiruan sangat terang */
+--bg-card: #FFFFFF; 
+
+--border-color: #CBD5E1; /* Abu-abu terang untuk light mode */
+--shadow-soft: 0 4px 15px rgba(0, 0, 0, 0.1);/* Putih bersih untuk kartu */
+
+--text-main: #1B2936;    /* Menggunakan warna gelap Anda sebagai teks */
+--text-muted: #64748B;
+
+--green: #22C55E;
+--yellow: #FACC15;
+--red: #EF4444;
+}
+
+
+/* --- CSS Toggle ganti tema */
+.theme-switch-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+}
+
+.theme-checkbox {
+  --toggle-size: 8px; /* Saya perkecil sedikit agar proporsional sebagai floating button */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 6.25em;
+  height: 3.125em;
+  background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+  background-size: 205%;
+  background-position: 0;
+  transition: 0.4s;
+  border-radius: 99em;
+  position: relative;
+  cursor: pointer;
+  font-size: var(--toggle-size);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Tambahan shadow agar terlihat melayang */
+}
+
+.theme-checkbox::before {
+  content: "";
+  width: 2.25em;
+  height: 2.25em;
+  position: absolute;
+  top: 0.438em;
+  left: 0.438em;
+  background: linear-gradient(to right, #efefef 50%, #2a2a2a 50%) no-repeat;
+  background-size: 205%;
+  background-position: 100%;
+  border-radius: 50%;
+  transition: 0.4s;
+}
+
+.theme-checkbox:checked::before {
+  left: calc(100% - 2.25em - 0.438em);
+  background-position: 0;
+}
+
+.theme-checkbox:checked {
+  background-position: 100%;
+}
+
+[data-theme="dark"] {
+  /* ================= MODE GELAP (Noctis Palette) ================= */
+/* Diambil dari palet Noctis: Biru yang lebih 'airy' dan tidak sepekat Slate */
+--bg-app: #1B2936;       /* Latar belakang utama (lebih terang & kebiruan) */
+--bg-card: #253341;      /* Latar kartu (kontras yang lebih halus dengan bg-app) */
+
+/* Teks diturunkan sedikit dari putih bersih ke off-white agar tidak silau */
+--text-main: #E2E8F0;    /* Putih Noctis (lebih adem) */
+--text-muted: #8E9FB1;   /* Abu-abu kebiruan untuk teks pendukung */
+--green: #22C55E;
+--yellow: #FACC15;
+--red: #EF4444;
+
+--border-color: #334155; /* Warna asli kamu untuk dark mode */
+--shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Fail-safe: Jika data-theme dark aktif, pastikan visual toggle mengikuti 
+   bahkan sebelum JavaScript selesai melakukan sinkronisasi pada input */
+[data-theme="dark"] .theme-checkbox {
+    background-position: 100%;
+}
+
+[data-theme="dark"] .theme-checkbox::before {
+    left: calc(100% - 2.25em - 0.438em);
+    background-position: 0;
+}
+
+/* ================= BASE ================= */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+/* ================= LAYOUT ================= */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  display: block;   
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 40px;
+  width: 100%;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: 28px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  margin-top: 10px;           /* Beri ruang sedikit lebih besar dari judul */
+  color: var(--text-muted);   /* Gunakan warna abu-abu Noctis */
+  font-size: 13px;            /* Perkecil sedikit agar teks panjang tetap satu baris */
+  font-weight: 600;
+  letter-spacing: 0.5px;      /* Kurangi spacing agar tidak terlalu melar */
+  text-transform: none;       /* WAJIB: Ubah ke 'none' agar format AM/PM dan tanggal tidak jadi kapital semua */
+  opacity: 0.9;
+}
+
+/* ================= SPL MAIN ================= */
+.spl-main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+.spl-value {
+  font-size: 110px; /* Sedikit diperbesar agar gagah */
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
+.spl-value, .stat-value {
+  font-variant-numeric: tabular-nums; /* Angka tidak akan goyang saat berubah */
+  font-feature-settings: "tnum";
+}
+
+.unit {
+  position: absolute;
+  right: -60px; /* Menggeser dBA ke luar alur tengah agar angka tetap center */
+  bottom: 20px;
+  font-size: 24px;
+  color: var(--text-muted);
+  opacity: 0.7;
+  font-weight: 400;
+}
+
+.spl-label {
+  color: var(--text-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-top: 10px;
+  display: block;
+}
+
+/* ================= STATS BOXES ================= */
+.stats {
+  display: flex;
+  justify-content: center; /* Memastikan grup kotak ada di tengah */
+  gap: 60px;
+  width: 100%;
+  max-width: 500px;
+  margin: 0 auto 40px auto;
+}
+
+.stat-item {
+  flex: 1; /* Memberikan lebar yang sama rata untuk MIN, AVG, MAX */
+  min-width: 120px;
+  background: var(--bg-card);
+  padding: 15px 0;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-value {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--text-main);
+  line-height: 1;     
+}
+
+.stat-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* ================= CHART CARD ================= */
+.chart-card {
+  background: var(--bg-card);
+  padding: 24px;
+  border-radius: 20px;
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-soft);
+  width: 100%;
+  max-width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.chart-card .label {
+  margin-bottom: 20px;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+
+
+/* Memastikan canvas chart mengikuti warna tema jika perlu */
+canvas {
+  filter: saturate(1.2); 
+  width: 100% !important;
+  height: calc(100% - 40px) !important;
+}
+
+/* ================= STATUS FOOTER ================= */
+#status {
+  margin-top: 30px;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--green); /* Default warna normal */
+}
+
+.chart-actions {
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+  padding-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/*Button Ekspor CSV */
+.btn-export {
+  align-items: center;
+  color: #ffffff;
+  font-size: 18px;
+  background: #48bb78;
+  border: none !important;
+  padding: 8px 16px;
+  box-shadow: 0 4px 0 #38A169;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.btn-export:hover {
+  background-color: #48bb78;;
+  transform: translateY(-1px);
+}
+
+.btn-export:active {
+  box-shadow: none;
+  transform: translate(0, 4px);
+}
+

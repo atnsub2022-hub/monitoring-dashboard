@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Acoustic Level Monitoring</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style-dashboard.css">
+
+</head>
+<body>
+  
+  <div class="theme-switch-container">
+      <input type="checkbox" class="theme-checkbox" id="theme-toggle">
+  </div>
+
+  <div class="container">
+
+    <header class="header">
+      <h1 id="node-id">NODE: --</h1>
+      <p class="subtitle">Realtime Sound Pressure Level</p>
+    </header>
+
+      <main class="dashboard">
+
+        <!-- SPL utama -->
+        <div class="spl-main">
+          <div class="spl-value">
+            <span id="spl">--</span>
+            <span class="unit">dBA</span>
+          </div>
+          <div class="spl-label">CURRENT LEVEL</div>
+        </div>
+      
+        <!-- Statistik -->
+        <div class="stats">      
+          <div class="stat-item">
+            <div class="stat-value" id="min">--</div>
+            <div class="stat-label">MIN</div>
+          </div>
+      
+          <div class="stat-item">
+            <div class="stat-value" id="avg">--</div>
+            <div class="stat-label">AVG</div>
+          </div>
+      
+          <div class="stat-item">
+            <div class="stat-value" id="max">--</div>
+            <div class="stat-label">MAX</div>
+          </div>      
+        </div>
+      
+        <!-- Chart -->
+        <div class="chart-card">
+          <div class="label">Noise Trend (Last 30s)</div>
+          <canvas id="splChart"></canvas>
+        </div>
+
+      <div class="chart-actions">
+        <button onclick="downloadCSV()" class="btn-export">
+          <i class="fas fa-file-download"></i> Export CSV
+        </button>
+      </div>
+
+      </main>
+  
+
+    <footer>
+      <span id="status">STATUS: —</span>
+    </footer>
+
+  </div>
+
+  <!-- JS -->
+  <!-- jangan pakai versi .min.js -->
+  <script src="mqttws31.js"></script>
+  <script src="chart.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
