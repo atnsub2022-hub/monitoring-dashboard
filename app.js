@@ -3,7 +3,7 @@
 // CONFIG
 // =========================
 const BROKER = "c517d1b31e43415fa354ad3067b84e17.s1.eu.hivemq.cloud";
-const PORT = "8883";
+const PORT = "8884";
 const USER = "atnos_dashboard";
 const PASS = "atnosGacor987123";
 
