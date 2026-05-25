@@ -1,0 +1,29 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main #Mejalankan  action setiap kali ada push ke branch main
+#permissions
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Inject Secrets into JS files
+        run: |
+          find . -name "*.js" -type f -exec sed -i "s/__MQTT_BROKER__/${{ secrets.MQTT_BROKER }}/g" {} +
+          find . -name "*.js" -type f -exec sed -i "s/__MQTT_PORT__/${{ secrets.MQTT_PORT }}/g" {} +
+          find . -name "*.js" -type f -exec sed -i "s/__MQTT_USER__/${{ secrets.MQTT_USER }}/g" {} +
+          find . -name "*.js" -type f -exec sed -i "s/__MQTT_PASS__/${{ secrets.MQTT_PASS }}/g" {} +
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: .
+          branch: gh-pages # Branch tujuan untuk hosting
